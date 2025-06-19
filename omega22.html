@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Omega Auto Repairs</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  a {
+    color: #4ade80; /* emerald-400 */
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: 900;
+    margin-top: 0;
+    color: #a5b4fc; /* indigo-300 */
+  }
+  p {
+    margin: 0 0 1.25rem 0;
+  }
+  button {
+    font-family: inherit;
+  }
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  /* Header */
+  header {
+    background: rgba(18, 18, 18, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #2d2d2d;
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+  .logo {
+    font-size: 1.65rem;
+    font-weight: 900;
+    color: #7c3aed; /* violet-600 */
+    letter-spacing: 0.05em;
+  }
+  nav.desktop-nav {
+    display: flex;
+    gap: 32px;
+  }
+  nav.desktop-nav a {
+    font-weight: 600;
+    padding: 8px 4px;
+    position: relative;
+  }
+  nav.desktop-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #7c3aed, #22d3ee);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  nav.desktop-nav a:hover::after,
+  nav.desktop-nav a:focus::after {
+    width: 100%;
+  }
+  /* Mobile nav */
+  .mobile-nav-wrapper {
+    display: none;
+    position: relative;
+  }
+  #mobile-nav-toggle {
+    background: none;
+    border: none;
+    color: #a5b4fc;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  nav.mobile-nav {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 64px;
+    background: rgba(18, 18, 18, 0.98);
+    width: 240px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+    flex-direction: column;
+    padding: 16px 0;
+    z-index: 200;
+  }
+  nav.mobile-nav a {
+    display: block;
+    padding: 12px 24px;
+    font-weight: 700;
+    border-bottom: 1px solid #2d2d2d;
+  }
+  nav.mobile-nav a:last-child {
+    border-bottom: none;
+  }
+  nav.mobile-nav.show {
+    display: flex;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    background:url("garage.png") center/cover no-repeat;
+    min-height: 65vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 16px;
+  }
+  .hero-content {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px #1e40af;
+  }
+  .hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 8px #1e40af;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, #7c3aed 0%, #22d3ee 100%);
+    border: none;
+    color: #fff;
+    padding: 16px 36px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    box-shadow: 0 4px 35px rgba(124, 58, 237, 0.7);
+    transform: translateY(-3px);
+    outline: none;
+  }
+  /* Sections */
+  section {
+    padding: 64px 16px;
+  }
+  h2.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 48px;
+    text-align: center;
+    color: #a5b4fc;
+  }
+  /* Services */
+  .services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: #1f2937;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s ease;
+  }
+  .service-card:hover,
+  .service-card:focus-within {
+    box-shadow: 0 8px 36px rgba(124, 58, 237, 0.6);
+  }
+  .service-card h3 {
+    color: #7c3aed;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  /* Contact */
+  .contact-info {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-details h3 {
+    color: #7c3aed;
+    margin-bottom: 12px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+  }
+  .material-icons.contact-icon {
+    color: #22d3ee;
+  }
+  iframe.map-embed {
+    width: 100%;
+    border: 0;
+    border-radius: 16px;
+    min-height: 280px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  /* Contact form */
+  form.contact-form {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+  }
+  form.contact-form label {
+    font-weight: 700;
+    color: #a5b4fc;
+  }
+  form.contact-form input,
+  form.contact-form textarea {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  form.contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  form.contact-form button {
+    background: #7c3aed;
+    color: white;
+    font-weight: 700;
+    padding: 14px 0;
+    border-radius: 12px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  form.contact-form button:hover,
+  form.contact-form button:focus {
+    background: #a78bfa;
+    outline: none;
+  }
+  /* Gallery */
+  .gallery-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+    border: 2px solid #374151;
+    height: 200px; /* Set a fixed height for uniformity */
+}
+
+.gallery-item img,
+.gallery-item video {
+    width: 100%;
+    height: 100%; /* Ensures the media fits the fixed height */
+    display: block;
+    transition: transform 0.3s ease;
+    object-fit: cover; /* Maintains aspect ratio and covers the area */
+}
+
+.gallery-item:hover img,
+.gallery-item:hover video,
+.gallery-item:focus-within img,
+.gallery-item:focus-within video {
+    transform: scale(1.05); /* Scale effect on hover/focus */
+}
+.gallery-item figcaption {
+    position: absolute; /* Positioning the caption */
+    bottom: 0; /* Aligns the caption to the bottom of the item */
+    left: 0; /* Aligns the caption to the left */
+    right: 0; /* Aligns the caption to the right */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+    color: white; /* Text color */
+    padding: 8px; /* Padding around the text */
+    text-align: center; /* Center the text */
+    font-size: 14px; /* Font size */
+}
+  /* Testimonials */
+  .testimonials {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonial-card {
+    background: #1f2937;
+    border-radius: 16px;
+    padding: 32px 40px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    text-align: center;
+    color: #a5b4fc;
+    user-select: none;
+  }
+  .testimonial-text {
+    margin-bottom: 1rem;
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+  .testimonial-author {
+    font-weight: 700;
+    color: #7c3aed;
+  }
+  .testimonial-controls {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  .testimonial-button {
+    background: #7c3aed;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background-color 0.3s ease;
+  }
+  .testimonial-button:hover,
+  .testimonial-button:focus {
+    background: #a78bfa;
+    outline: none;
+  }
+  /* Booking */
+  .booking-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #1f2937;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 36px rgba(124, 58, 237, 0.6);
+  }
+  .booking-form label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #a5b4fc;
+  }
+  .booking-form select,
+  .booking-form input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 24px;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+  .booking-form button {
+    background: #22d3ee;
+    border: none;
+    padding: 16px 0;
+    width: 100%;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.125rem;
+    cursor: pointer;
+    color: #121212;
+    transition: background-color 0.3s ease;
+  }
+  .booking-form button:hover,
+  .booking-form button:focus {
+    background: #0e7490;
+    outline: none;
+  }
+  .booking-confirmation {
+    margin-top: 20px;
+    font-weight: 700;
+    color: #4ade80;
+    text-align: center;
+  }
+  /* About & Team */
+  .team-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 40px;
+  }
+  .team-card {
+    background: #1f2937;
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+  .team-photo {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 1rem auto;
+    border: 4px solid #7c3aed;
+  }
+  .team-name {
+    font-weight: 700;
+    color: #a5b4fc;
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+  }
+  .team-role {
+    color: #d1d5db;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+  .team-bio {
+    font-size: 0.95rem;
+    color: #9ca3af;
+  }
+  /* Blog */
+  .blog-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 36px;
+  }
+  .blog-post {
+    background: #111827;
+    border-radius: 20px;
+    padding: 24px 32px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.8);
+  }
+  .blog-post h3 {
+    margin-top: 0;
+    color: #7c3aed;
+  }
+  .blog-post p {
+    color: #d1d5db;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  /* Social */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .social-link {
+    color: #7c3aed;
+    font-size: 2rem;
+    display: inline-flex;
+  }
+  .social-link:hover,
+  .social-link:focus {
+    color: #22d3ee;
+    outline: none;
+  }
+  /* Footer */
+  footer {
+    background: #111827;
+    color: #a1a1aa;
+    padding: 48px 16px 32px 16px;
+    border-top: 1px solid #3730a3;
+    margin-top: auto;
+  }
+  footer .footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+    gap: 24px;
+  }
+  footer h4 {
+    color: #7c3aed;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  footer a {
+    display: block;
+    margin-bottom: 8px;
+  }
+  footer p, footer .business-hours {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  /* Responsive */
+  @media (max-width: 640px) {
+    nav.desktop-nav {
+      display: none;
+    }
+    .mobile-nav-wrapper {
+      display: block;
+    }
+    .contact-info {
+      grid-template-columns: 1fr;
+    }
+    section {
+      padding: 48px 12px;
+    }
+    .hero-content h1 {
+      font-size: 2rem;
+    }
+    .hero-content p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .services-list,
+    .team-grid,
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+    footer .footer-container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  /* Scrollbar styles for modern browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #7c3aed99;
+    border-radius: 20px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 20px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="#hero" class="logo" aria-label="Omega Auto Repairs Home">Omega Auto Repairs</a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#booking">Get a Quote</a>
+        <a href="#about">About Us</a>
+        <a href="#blog">Tips</a>
+      </nav>
+      <div class="mobile-nav-wrapper">
+        <button id="mobile-nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle navigation menu">
+          <span class="material-icons">menu</span>
+        </button>
+        <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile primary navigation" tabindex="-1">
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#booking">Booking</a>
+          <a href="#about">About Us</a>
+          <a href="#blog">Tips</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section id="hero" class="hero" role="banner">
+      <div class="hero-content">
+        <h1>Welcome to Omega Auto Repairs</h1>
+        <p>Your trusted partner for reliable, professional auto repair and maintenance services.</p>
+        <button class="btn-primary" onclick="window.location.href='tel:0727477965'" type="button">Call Now</button>
+        <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" type="button">Book Now</button>
+      </div>
+    </section>
+    <section id="services" aria-labelledby="services-title">
+      <h2 id="services-title" class="section-title">Our Services</h2>
+      <div class="services-list">
+        <article class="service-card" tabindex="0" aria-describedby="service1-desc">
+          <span class="material-icons service-icon" aria-hidden="true">build_circle</span>
+          <h3>Mechanical Repairs</h3>
+          <p id="service1-desc">Comprehensive engine, transmission, and brake repairs to keep your vehicle running smoothly and safely.</p>
+        </article>
+        <article class="service-card" tabindex="0" aria-describedby="service2-desc">
+          <span class="material-icons service-icon" aria-hidden="true">format_paint</span>
+          <h3>Bodywork &amp; Spraying</h3>
+          <p id="service2-desc">Expert collision repair and custom paint jobs restoring your car’s appearance to pristine condition.</p>
+        </article>
+        <article class="service-card" tabindex="0" aria-describedby="service3-desc">
+          <span class="material-icons service-icon" aria-hidden="true">settings</span>
+          <h3>Engine Overhaul</h3>
+          <p id="service3-desc">Full engine rebuilding and performance tuning by our experienced technicians.</p>
+        </article>
+        <article class="service-card" tabindex="0" aria-describedby="service4-desc">
+          <span class="material-icons service-icon" aria-hidden="true">medical_services</span>
+          <h3>Car Diagnosing</h3>
+          <p id="service4-desc">Advanced diagnostic tools identifying and fixing electrical and mechanical issues efficiently.</p>
+        </article>
+        <article class="service-card" tabindex="0" aria-describedby="service5-desc">
+          <span class="material-icons service-icon" aria-hidden="true">local_car_wash</span>
+          <h3>Car Wash</h3>
+          <p id="service5-desc">Thorough exterior and interior cleaning to keep your vehicle looking its best.</p>
+        </article>
+        <article class="service-card" tabindex="0" aria-describedby="service6-desc">
+          <span class="material-icons service-icon" aria-hidden="true">garage</span>
+          <h3>Towing &amp; Tire Change</h3>
+          <p id="service6-desc">Reliable roadside assistance including towing services and professional tire replacement.</p>
+        </article>
+      </div>
+    </section>
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title" class="section-title">Location &amp; Contact</h2>
+      <div class="contact-info">
+        <div class="contact-details">
+          <div class="contact-item"><span class="material-icons contact-icon" aria-hidden="true">location_on</span><address>Mikindani - Kwa Mwanzia</address></div>
+          <div class="contact-item"><span class="material-icons contact-icon" aria-hidden="true">call</span><a href="tel:+254727477965">0727 477 965</a></div>
+          <div class="contact-item"><span class="material-icons contact-icon" aria-hidden="true">email</span><a href="mailto:contact@omegaautorepairs.co.ke">contact@omegaautorepairs.co.ke</a></div>
+          <div class="contact-item"><span class="material-icons contact-icon" aria-hidden="true">whatsapp</span><a href="https://wa.me/254727477965" target="_blank" rel="noopener noreferrer"style="background-color: #25D366; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Chat on WhatsApp</a></div>
+
+          <form class="contact-form" aria-label="Contact form" id="contact-form" onsubmit="sendWhatsAppMessage(event)">
+    <label for="contact-name">Name</label>
+    <input type="text" id="contact-name" name="contact-name" required />
+    <label for="contact-email">Email</label>
+    <input type="email" id="contact-email" name="contact-email" required />
+    <label for="contact-message">Message</label>
+    <textarea id="contact-message" name="contact-message" required></textarea>
+    <button type="submit">Send Message</button>
+</form>
+
+<script>
+function sendWhatsAppMessage(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Get the values from the form
+    const name = encodeURIComponent(document.getElementById('contact-name').value);
+    const email = encodeURIComponent(document.getElementById('contact-email').value);
+    const message = encodeURIComponent(document.getElementById('contact-message').value);
+
+    // Construct the WhatsApp message
+    const phoneNumber = '254727477965'; // The recipient's phone number
+    const whatsappMessage = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+
+    // Open the WhatsApp link
+    window.open(whatsappLink, '_blank');
+}
+</script>
+
+        </div>
+        <iframe
+          title="Omega Auto Repairs Location on Google Maps"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12605.602973209627!2d39.65078777128166!3d-4.027525237799442!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f18112c36bf13%3A0xf6f177c0508e25d0!2sMikindani%2C%20Kwale%20County!5e0!3m2!1sen!2ske!4v1687214068980!5m2!1sen!2ske"
+          allowfullscreen=""
+          loading="lazy"
+          class="map-embed"
+          aria-hidden="false"
+          tabindex="0"
+        ></iframe>
+      </div>
+    </section>
+    <section id="gallery" aria-labelledby="gallery-title">
+    <h2 id="gallery-title" class="section-title">Gallery</h2>
+    <div class="gallery-grid" role="list">
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/28718ffa-78bb-43ab-a50f-3eac04d61183.png" alt="Car before repair with damaged front bumper" />
+            <figcaption>Before Repair</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/278349f3-b111-4508-a69d-45b3a3b72878.png" alt="Car after repair with new front bumper and paint" />
+            <figcaption>After Repair</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <video controls>
+                <source src="bodywork spraying.mp4" type="video/mp4">
+            </video>
+            <figcaption>bodywork-spraying</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <img src="engine before repair.jpg" alt="engine-overhaul" />
+            <figcaption>engine before repair</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <img src="engine after repair.jpg" alt="engine-overhaul" />
+            <figcaption>engine after repair</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <video controls>
+                <source src="oil changing.mp4" type="video/mp4">
+            </video>
+            <figcaption>oil changing</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <img src="car diagnosing 2.jpg" alt="car diagnosing" />
+            <figcaption>car diagnosing</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <img src="spare parts.jpg" alt="spare parts" />
+            <figcaption>spare parts</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem" tabindex="0">
+            <video controls>
+                <source src="thorough cleaning.mp4" type="video/mp4">
+            </video>
+            <figcaption>thorough cleaning</figcaption>
+        </figure>
+    </div>
+</section>
+    <section id="testimonials" aria-labelledby="testimonials-title">
+      <h2 id="testimonials-title" class="section-title">What Our Customers Say</h2>
+      <div class="testimonials" aria-live="polite" aria-atomic="true" aria-relevant="additions">
+        <article class="testimonial-card" tabindex="0" id="testimonial-text">
+          <p class="testimonial-text" id="testimonial-content">"Omega Auto Repairs restored my car after an accident flawlessly. The staff was courteous and efficient."</p>
+          <p class="testimonial-author" id="testimonial-author">— Sarah K.</p>
+        </article>
+        <div class="testimonial-controls" role="region" aria-label="Testimonial navigation">
+          <button class="testimonial-button" id="testimonial-prev" aria-label="Previous testimonial" type="button">
+            <span class="material-icons">arrow_back</span>
+          </button>
+          <button class="testimonial-button" id="testimonial-next" aria-label="Next testimonial" type="button">
+            <span class="material-icons">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section id="booking" aria-labelledby="booking-title">
+    <h2 id="booking-title" class="section-title">Book Your Appointment</h2>
+    <div class="booking-wrapper">
+        <form id="booking-form" class="booking-form" aria-live="polite" aria-relevant="additions" onsubmit="sendWhatsAppBooking(event)">
+            <label for="booking-name">Full Name</label>
+            <input type="text" id="booking-name" name="booking-name" required aria-required="true" />
+            <label for="booking-phone">Phone Number</label>
+            <input type="tel" id="booking-phone" name="booking-phone" required aria-required="true" pattern="\\+?[0-9\\s-]{7,15}" placeholder="+254 7xx xxx xxx" />
+            <label for="booking-service">Select Service</label>
+            <select id="booking-service" name="booking-service" required aria-required="true" onchange="enableTimeSlot()">
+                <option value="" disabled selected>Select a service</option>
+                <option value="mechanical-repairs">Mechanical Repairs</option>
+                <option value="bodywork-spraying">Bodywork & Spraying</option>
+                <option value="engine-overhaul">Engine Overhaul</option>
+                <option value="car-diagnosing">Car Diagnosing</option>
+                <option value="car-wash">Car Wash</option>
+                <option value="towing-tire-change">Towing & Tire Change</option>
+            </select>
+            <label for="booking-date">Select Date</label>
+            <input type="date" id="booking-date" name="booking-date" required aria-required="true" min="" onchange="enableTimeSlot()" />
+            <label for="booking-time">Select Time Slot</label>
+            <select id="booking-time" name="booking-time" required aria-required="true">
+                <option value="" disabled selected>Select a time</option>
+                <option value="09:00">09:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="13:00">01:00 PM</option>
+                <option value="14:00">02:00 PM</option>
+                <option value="15:00">03:00 PM</option>
+                <option value="16:00">04:00 PM</option>
+            </select>
+            <button type="submit">Confirm Booking</button>
+            <p class="booking-confirmation" id="booking-confirmation" role="alert" aria-live="assertive"></p>
+        </form>
+    </div>
+</section>
+
+<script>
+function enableTimeSlot() {
+    const dateInput = document.getElementById('booking-date').value;
+    const timeSelect = document.getElementById('booking-time');
+
+    // Enable the time slot select if a date is selected
+    if (dateInput) {
+        timeSelect.disabled = false;
+    } else {
+        timeSelect.disabled = true;
+    }
+}
+
+function sendWhatsAppBooking(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Get the values from the form
+    const name = encodeURIComponent(document.getElementById('booking-name').value);
+    const phone = encodeURIComponent(document.getElementById('booking-phone').value);
+    const service = encodeURIComponent(document.getElementById('booking-service').value);
+    const date = encodeURIComponent(document.getElementById('booking-date').value);
+    const time = encodeURIComponent(document.getElementById('booking-time').value);
+
+    // Construct the WhatsApp message
+    const phoneNumber = '254727477965'; // The recipient's phone number (without the +)
+    const whatsappMessage = `Booking Details:\nName: ${name}\nPhone: ${phone}\nService: ${service}\nDate: ${date}\nTime: ${time}`;
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+
+    // Open the WhatsApp link
+    window.open(whatsappLink, '_blank');
+}
+</script>
+
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title" class="section-title">About Us</h2>
+      <div class="container">
+        <p style="max-width: 900px; margin: 0 auto 48px auto; color:#d1d5db; font-size: 1.125rem; text-align:center;">
+          Omega Auto Repairs was founded with a mission to provide exceptional, trustworthy auto repair services to the Mikindani and surrounding communities. Our team of certified mechanics and bodywork experts strive to deliver quality and care for every vehicle that comes through our doors.
+        </p>
+        <div class="team-grid" role="list" aria-label="Team members list">
+          <article class="team-card" role="listitem" tabindex="0" aria-label="Team member: John Mwangi, Lead Mechanic">
+            <img src="lead mechanic.jpg" alt="Portrait photo of ......., Lead Mechanic" class="team-photo" />
+            <h3 class="team-name">.........</h3>
+            <p class="team-role">Lead Mechanic</p>
+            <p class="team-bio">..... brings 15 years of hands-on experience in mechanical repairs and engine overhauls. His expertise ensures precision and reliability in every job.</p>
+          </article>
+          <article class="team-card" role="listitem" tabindex="0" aria-label="Team member: Amina Yusuf, Bodywork Specialist">
+            <img src="spraying specialist.jpg" alt="Portrait photo of ......., Bodywork Specialist" class="team-photo" />
+            <h3 class="team-name">.....</h3>
+            <p class="team-role">Bodywork Specialist</p>
+            <p class="team-bio">...... specializes in collision repairs and custom paint jobs, delivering flawless finishes and customer satisfaction.</p>
+          </article>
+          <article class="team-card" role="listitem" tabindex="0" aria-label="Team member: Joseph Otieno, Customer Relations">
+            <img src="customer relation.jpg" alt="Portrait photo of ......, Customer Relations" class="team-photo" />
+            <h3 class="team-name">.....</h3>
+            <p class="team-role">Customer Relations</p>
+            <p class="team-bio">..... manages client communications and bookings, ensuring a smooth and courteous experience from start to finish.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="blog" aria-labelledby="blog-title">
+      <h2 id="blog-title" class="section-title">Car Maintenance Tips</h2>
+      <div class="blog-list" role="list">
+        <article class="blog-post" role="listitem" tabindex="0">
+          <h3>How to Increase Your Car’s Lifespan</h3>
+          <p>Regular servicing and oil changes go a long way in keeping your vehicle running smoothly. Check your tire pressure monthly and replace worn tires promptly.</p>
+        </article>
+        <article class="blog-post" role="listitem" tabindex="0">
+          <h3>DIY Car Wash Tips</h3>
+          <p>Use gentle automotive soap, avoid washing under direct sunlight to prevent watermarks, and dry with a soft microfiber cloth for best results.</p>
+        </article>
+        <article class="blog-post" role="listitem" tabindex="0">
+          <h3>Road Safety Reminders for Drivers</h3>
+          <p>Always check your mirrors and blind spots, keep a safe distance from other vehicles, and never use your phone while driving.</p>
+        </article>
+      </div>
+    </section>
+    <section id="social" aria-label="Social media links" style="padding: 32px 0; text-align:center;">
+      <h2 class="section-title" style="color:#a5b4fc;">Connect With Us</h2>
+      <div class="social-links">
+        <a href="https://facebook.com/omegaautorepairs" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+          <span class="material-icons" style="font-size:2rem;">facebook</span>
+        </a>
+        <a href="https://instagram.com/omegaautorepairs" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+          <span class="material-icons" style="font-size:2rem;">instagram</span>
+        </a>
+        <a href="https://tiktok.com/@omegaautorepairs" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="social-link">
+           <span class="material-icons" style="font-size:2rem;">tiktok</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-container" role="contentinfo">
+      <div>
+        <h4>Quick Links</h4>
+        <a href="#hero">Home</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+        <a href="#privacy">Privacy Policy</a>
+      </div>
+      <div>
+        <h4>Business Hours</h4>
+        <p>Mon - sat: 8:00 am - 5:00 pm</p>
+        <p>Sunday: 12 noon - 5:00 pm</p>
+      </div>
+      <div style="grid-column: span 2; font-size: 0.85rem; text-align:center; margin-top: 32px; color: #6b7280;">
+        &copy; 2025 Omega Auto Repairs. All rights reserved. | Terms &amp; Conditions apply.
+      </div>
+    </div>
+  </footer>
+<script>
+  // Mobile menu toggle
+  const mobileToggleBtn = document.getElementById('mobile-nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  mobileToggleBtn.addEventListener('click', () => {
+    const isExpanded = mobileToggleBtn.getAttribute('aria-expanded') === 'true';
+    mobileToggleBtn.setAttribute('aria-expanded', !isExpanded);
+    mobileNav.classList.toggle('show');
+    if (!isExpanded) {
+      mobileNav.focus();
+    }
+  });
+  // Close mobile nav on link click
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('show');
+      mobileToggleBtn.setAttribute('aria-expanded', false);
+    });
+  });
+  // Testimonials data and logic
+  const testimonials = [
+    {
+      text: 'Omega Auto Repairs restored my car after an accident flawlessly. The staff was courteous and efficient.',
+      author: 'Sarah K.'
+    },
+    {
+      text: 'Highly professional service and transparent pricing. I trust them with all my vehicle maintenance.',
+      author: 'James M.'
+    },
+    {
+      text: 'Fast and reliable repairs. The team is knowledgeable and friendly, highly recommended.',
+      author: 'Esther W.'
+    },
+  ];
+  let currentTestimonialIndex = 0;
+  const testimonialContent = document.getElementById('testimonial-content');
+  const testimonialAuthor = document.getElementById('testimonial-author');
+  function updateTestimonial() {
+    const t = testimonials[currentTestimonialIndex];
+    testimonialContent.textContent = `"${t.text}"`;
+    testimonialAuthor.textContent = `— ${t.author}`;
+  }
+  document.getElementById('testimonial-prev').addEventListener('click', () => {
+    currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
+    updateTestimonial();
+  });
+  document.getElementById('testimonial-next').addEventListener('click', () => {
+    currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+    updateTestimonial();
+  });
+  updateTestimonial();
+
+  // Booking form date min = today
+  const bookingDateInput = document.getElementById('booking-date');
+  const today = new Date().toISOString().split('T')[0];
+  bookingDateInput.setAttribute('min', today);
+  const bookingTimeSelect = document.getElementById('booking-time');
+  // Generate time slots (9am to 5pm, hourly) for simplicity
+  function generateTimeSlots() {
+    bookingTimeSelect.innerHTML = '<option value="" disabled selected>Select a time</option>';
+    for (let hour = 9; hour <= 17; hour++) {
+      const timeString = hour.toString().padStart(2, '0') + ':00';
+      const option = document.createElement('option');
+      option.value = timeString;
+      option.textContent = timeString;
+      bookingTimeSelect.appendChild(option);
+    }
+    bookingTimeSelect.disabled = false;
+  }
+  bookingDateInput.addEventListener('change', () => {
+    if (bookingDateInput.value) {
+      generateTimeSlots();
+    } else {
+      bookingTimeSelect.disabled = true;
+      bookingTimeSelect.innerHTML = '<option value="" disabled selected>Select a time</option>';
+    }
+  });
+
+  // Handle booking form submission
+  const bookingForm = document.getElementById('booking-form');
+  const bookingConfirmation = document.getElementById('booking-confirmation');
+  bookingForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!bookingForm.checkValidity()) {
+      bookingForm.reportValidity();
+      return;
+    }
+    // Simulate booking confirmation
+    bookingConfirmation.textContent = `Thank you, ${bookingForm['booking-name'].value}! Your appointment for ${bookingForm['booking-service'].selectedOptions[0].text} on ${bookingForm['booking-date'].value} at ${bookingForm['booking-time'].value} has been booked. We will contact you shortly.`;
+    bookingForm.reset();
+    bookingTimeSelect.disabled = true;
+  });
+
+  // Simple contact form submission handling
+  const contactForm = document.getElementById('contact-form');
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+    alert('Thank you for your message! We will get back to you soon.');
+    contactForm.reset();
+  });
+</script>
+</body>
+</html>
+
